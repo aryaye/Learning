@@ -31,7 +31,7 @@ for i = 1:m
         end
     end
 end
-
+subplot(1,3,3)
 imshow(mask)
 PoE = (1-pbsum/bsum)*0.8081 + (1-pfsum/fsum)*0.1919;
 
