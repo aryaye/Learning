@@ -18,7 +18,7 @@ for i = 1:64
 end
 %}
 %features = [1,7,12,14,15,17,18,19];
-features = [1,7,12,14,15,17,18,19];
+features = [1,7,12,14,15,17,18,16];
 % we chose x1,x7,x12, x14,x15,x17,x18,x19 as training feature
 FG_data = abs(TrainsampleDCT_FG(:,features));
 BG_data = abs(TrainsampleDCT_BG(:,features));
@@ -53,5 +53,25 @@ imshow(mask_all)
 subplot(1,2,2)
 imshow(mask_8)
 
-err1 = sum(sum(mask_all==img_mask))/m/n;
-err2 = sum(sum(mask_8==img_mask))/n/m;
+sumf = 0;
+sumb = 0;
+errf = 0;
+errb = 0;
+for i = 1:m
+    for j = 1:n
+        if img_mask(i,j) == 0
+            sumf = sumf + 1;
+            if mask_8(i,j) == 1
+                errf = errf + 1;
+            end
+        end
+        if img_mask(i,j) == 1
+            sumb = sumb + 1;
+            if mask_8(i,j) == 0
+                errb = errb + 1;
+            end
+        end 
+    end
+end
+    
+p2*errf/sumf + p1*errb/sumb
